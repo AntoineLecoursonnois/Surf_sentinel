@@ -2,13 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
-from geopy.geocoders import Nominatim
-from geopy import distance
+from datetime import datetime
 
 class scrapper_class:
-    def __init__(self, departement, date, heure):
+    def __init__(self, departement, heure):
         self.departement = departement.lower()
-        self.date = date
         self.heure = heure
         self.fichier_lat_long_par_spot = pd.read_csv('lat_long_spots.csv', index_col=False)
 
@@ -52,10 +50,10 @@ class scrapper_class:
             soup_url = BeautifulSoup(meteo_spot_web_page.content, "html.parser")
 
             for i in soup_url.find_all("div", class_="detailed-report-box hidden gocenter") :
-                datetime = str(re.search("box-\d+-\d+-\d+-\d+", str(i)).group(0)).replace('box-','')
+                date_url = str(re.search("box-\d+-\d+-\d+-\d+", str(i)).group(0)).replace('box-','')
                 url.append(spot_url)
-                date.append(datetime[0:10])
-                heure.append(datetime[11:].replace('0',''))
+                date.append(date_url[0:10])
+                heure.append(date_url[11:].replace('0',''))
 
                 qualité_des_vagues_desc = str(re.search("strong>\w<span", str(i)).group(0)).replace('strong>','').replace('<span','')
                 qualité_des_vagues.append(qualité_des_vagues_desc)
@@ -103,11 +101,11 @@ class scrapper_class:
         spots_previsions = pd.merge(left=spots_previsions, right=self.fichier_lat_long_par_spot, on = 'full_name', how='left')
 
         if self.heure != """Je n'ai pas de contrainte de temps""" :
-            top_spots = spots_previsions[(spots_previsions.heure == self.heure)].sort_values(by=['note']).head(500)
+            top_spots = spots_previsions[(spots_previsions.heure == self.heure)].sort_values(by=['note', 'hauteur'], ascending = [True, False]).head(500)
         else :
-            top_spots = spots_previsions.sort_values(by=['note', 'hauteur'], ascending = [True, False]).head(500)
+            top_spots = spots_previsions.sort_values(by=['note']).head(500)
 
-        return top_spots.reset_index()
+        return top_spots
 
     def communes(self):
         df = self.scrapper_function()
