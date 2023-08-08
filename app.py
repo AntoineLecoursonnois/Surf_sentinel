@@ -4,8 +4,10 @@ from datetime import date, timedelta
 from scrap_to_csv import scrapper_class
 
 def main():
+    st.write("""Attendre qu'un tableau s'affiche et que la mention "RUNNING..." en haut à droite de la page disparaisse avant toute modification de la sélection.""")
+
     # liste des départements disponibles
-    departement = st.selectbox("""Dans quel département souhaites tu surfer ? \n""", ['Morbihan', 'Cotes-darmor', 'Finsitere', 'Ille-et-vilaine'])
+    departement = st.selectbox("""Dans quel département souhaites tu surfer ? \n""", ['Morbihan', 'Cotes-darmor', 'Finistere', 'Ille-et-vilaine'])
 
     # liste des jours de aujourd'hui à J+6
     datelist = [x.date() for x in pd.date_range(date.today(), periods=7).tolist()]
@@ -16,8 +18,6 @@ def main():
 
     # Si l'utilisateur veut surfer un jour en particulier il peut le préciser dans une checkbox
     filter_hour = st.checkbox('Je veux surfer à une heure précise.')
-
-    st.write("""S'il est toujours mentionné "RUNNING..." en haut à droite de la page alors merci de patienter le temps de récupérer les informations en temps réel.""")
 
     if filter_day :
         # Sélectionner le jour en particulier
