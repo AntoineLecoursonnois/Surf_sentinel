@@ -16,6 +16,8 @@ wordcloud
 unidecode
 sklearn
 requests
+BeautifulSoup
+bs4
 
 # tests/linter
 black
