@@ -14,9 +14,8 @@ datetime
 matplotlib
 wordcloud
 unidecode
-sklearn
 requests
-BeautifulSoup
+BeautifulSoup4
 bs4
 
 # tests/linter
