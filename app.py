@@ -8,7 +8,8 @@ def main():
     departement = st.selectbox("""Dans quel département souhaites tu surfer ? \n""", ['Morbihan', 'Cotes-darmor', 'Finsitere', 'Ille-et-vilaine'])
 
     # liste des jours de aujourd'hui à J+6
-    datelist = [x.date() for x in pd.date_range(date.today(), periods=9).tolist() if x > (date.today() + timedelta(days=1))]
+    datelist = [x.date() for x in pd.date_range(date.today(), periods=7).tolist()]
+                # if x > (date.today() + timedelta(days=1))]
 
     # Si l'utilisateur veut surfer un jour en particulier il peut le préciser dans une checkbox
     filter_day = st.checkbox('Je veux surfer un jour en particulier.')
