@@ -103,7 +103,7 @@ class scrapper_class:
         if self.heure != """Je n'ai pas de contrainte de temps""" :
             top_spots = spots_previsions[(spots_previsions.heure == self.heure)].sort_values(by=['note', 'hauteur'], ascending = [True, False]).head(500)
         else :
-            top_spots = spots_previsions.sort_values(by=['note']).head(500)
+            top_spots = spots_previsions.sort_values(by=['note', 'hauteur'], ascending = [True, False]).head(500)
 
         return top_spots
 
