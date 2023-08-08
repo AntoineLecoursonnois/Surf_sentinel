@@ -9,7 +9,7 @@ numpy
 pandas
 scikit-learn
 plotly
-nltk
+geopy
 datetime
 matplotlib
 wordcloud
